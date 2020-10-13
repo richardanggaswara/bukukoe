@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+	<record id="view_delivery_carrier_form_with_provider_rajaongkir"
+		model="ir.ui.view">
+		<field name="name">delivery.carrier.form.provider.rajaongkir</field>
+		<field name="model">delivery.carrier</field>
+		<field name="inherit_id" ref="delivery.view_delivery_carrier_form" />
+		<field name="arch" type="xml">
+			<xpath expr="//page[@name='destination']" position='before'>
+				<page string="RajaOngkir"
+					attrs="{'invisible': [('delivery_type', '!=', 'rajaongkir')]}">
+					<group>
+						<group>
+							<field name="rajaongkir_url"
+								attrs="{'required': [('delivery_type', '=', 'rajaongkir')]}" />
+							<field name="rajaongkir_apikey"
+								attrs="{'required': [('delivery_type', '=', 'rajaongkir')]}" />
+						</group>
+						<group>
+							<field name="sp_active" />
+							<field name="sp_city_id"
+								attrs="{'required': [('sp_active', '=', True)]}" />
+							<field name="sp_subdistrict_id"
+								attrs="{'required': [('sp_active', '=', True)]}" />
+						</group>
+						<group>
+							<field name="rajaongkir_courier"
+								attrs="{'required': [('delivery_type', '=', 'rajaongkir')]}" />
+							<field name="rajaongkir_service"
+								attrs="{'required': [('delivery_type', '=', 'rajaongkir')]}" />
+						</group>
+					</group>
+				</page>
+			</xpath>
+		</field>
+	</record>
+
+	<record id="view_partner_form_inherit" model="ir.ui.view">
+		<field name="name">res.partner.rajaongkir</field>
+		<field name="model">res.partner</field>
+		<field name="inherit_id" ref="base.view_partner_form" />
+		<field name="arch" type="xml">
+			<field name="city" position="replace">
+				<field name="subdistrict" placeholder="Subdistrict" invisible="1"
+					class="o_address_street"
+					attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}" />
+				<field name="subdistrict_id" placeholder="Subdistrict" class="o_address_street"
+					attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}" />
+				<field name="city" placeholder="City" invisible="1"
+					class="o_address_street"
+					attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}" />
+				<field name="city_id" placeholder="City" class="o_address_city"
+					attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}" />
+			</field>
+		</field>
+	</record>
+
+	<record id="view_res_country_city_tree" model="ir.ui.view">
+		<field name="name">res.country.city.tree</field>
+		<field name="model">res.country.city</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="name" />
+				<field name="state_id" />
+				<field name="rajaongkir_id" />
+			</tree>
+		</field>
+	</record>
+
+	<record id="view_res_country_subdistrict_tree" model="ir.ui.view">
+		<field name="name">res.country.subdistrict.tree</field>
+		<field name="model">res.country.subdistrict</field>
+		<field name="arch" type="xml">
+			<tree>
+				<field name="name" />
+				<field name="city_id" />
+				<field name="rajaongkir_id" />
+			</tree>
+		</field>
+	</record>
+
+	<record id="action_res_country_city" model="ir.actions.act_window">
+		<field name="name">Cities</field>
+		<field name="res_model">res.country.city</field>
+		<field name="help">Display and manage the list of all cities that
+			can be
+			assigned to your partner records. You can create or delete
+			cities
+			to
+			make sure the ones you are working on will be
+			maintained.
+		</field>
+	</record>
+
+	<record id="action_res_country_subdistrict" model="ir.actions.act_window">
+		<field name="name">Subdistricts</field>
+		<field name="res_model">res.country.subdistrict</field>
+		<field name="help">Display and manage the list of all subdistricts that
+			can be
+			assigned to your partner records. You can create or delete
+			subdistricts
+			to make sure the ones you are working on will be
+			maintained.
+		</field>
+	</record>
+
+	<menuitem action="action_res_country_city" id="menu_res_country_city"
+		parent="contacts.menu_localisation" sequence="2" groups="base.group_no_one" />
+	<menuitem action="action_res_country_subdistrict" id="menu_res_country_subdistrict"
+		parent="contacts.menu_localisation" sequence="2" groups="base.group_no_one" />
+
+	<record id="view_stock_picking_delivery_rajaongkir" model="ir.ui.view">
+		<field name="name">stock.picking.tree</field>
+		<field name="model">stock.picking</field>
+		<field name="arch" type="xml">
+			<tree editable="bottom" create="0" delete="0">
+				<field name="company_id" invisible="1" />
+				<field name="name" readonly="1" />
+				<field name="origin" readonly="1" />
+				<field name="partner_id" readonly="1" />
+				<field name="carrier_id" />
+				<field name="carrier_tracking_ref" />
+			</tree>
+		</field>
+	</record>
+
+	<record id="action_stock_picking_delivery_rajaongkir" model="ir.actions.act_window">
+		<field name="name">Input Delivery Tracking</field>
+		<field name="res_model">stock.picking</field>
+		<field name="domain">[('picking_type_id.code','=','outgoing'), ('state','!=','cancel')]</field>
+		<field name="view_mode">tree</field>
+		<field name="view_id" ref="delivery_rajaongkir.view_stock_picking_delivery_rajaongkir" />
+	</record>
+
+	<menuitem action="action_stock_picking_delivery_rajaongkir"
+		id="menu_stock_picking_delivery_rajaongkir" parent="sale.sale_order_menu" sequence="2" />
+</odoo>

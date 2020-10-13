@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<template id="report_delivery_slip_inherit_rajaongkir"
+		inherit_id="stock.report_delivery_document">
+		<xpath expr="//div[hasclass('page')]" position="inside">
+			<h2>Delivery Tracking</h2>
+			<div class="row mt32 mb32" t-if="o.carrier_id.delivery_type=='rajaongkir'">
+                <div t-if="o.carrier_id.name" class="col-auto">
+                    <strong>Carrier:</strong>
+                    <p t-field="o.carrier_id.name"/>
+                </div>
+                <div t-if="o.carrier_tracking_ref" class="col-auto">
+                    <strong>Tracking Reference:</strong>
+                    <p t-field="o.carrier_tracking_ref"/>
+					<!--a href="http://wa.me/[nomor%20hp%20shipping]/?text=Menginfokan%20pesanan%20sudah%20dalam%20pengiriman%20dengan%20ekpedisi%20x%20nomor%20resi%20123">WA ke Pelanggan</a-->
+                </div>
+                <t t-set="tracking_value" t-value="o._track_rajaongkir()" />
+				<t t-set="delivered" t-value="tracking_value['delivered']" t-if='tracking_value' />
+				<div class="col-auto" t-if="tracking_value">
+					<strong>Destination:</strong>
+					<p t-esc="tracking_value['destination']" />
+				</div>
+				<div class="col-auto" t-if="tracking_value">
+					<strong>Status:</strong>
+					<p t-esc="tracking_value['status']" />
+				</div>
+				<div class="col-auto" t-if="delivered">
+					<strong>Receiver:</strong>
+					<p t-esc="tracking_value['receiver_name']" />
+				</div>
+            </div>
+			<table class="table table-condensed mt48" t-if="tracking_value">
+				<thead>
+					<tr>
+						<th class="text-center">
+							<strong>Description</strong>
+						</th>
+						<th class="text-center">
+							<strong>Date</strong>
+						</th>
+						<th class="text-center">
+							<strong>Time</strong>
+						</th>
+						<th class="text-center">
+							<strong>City</strong>
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr t-foreach="tracking_value['manifest']" t-as="manifest">
+						<td class="text-left">
+							<span t-esc="manifest['description']" />
+						</td>
+						<td class="text-left">
+							<span t-esc="manifest['date']" />
+						</td>
+						<td class="text-left">
+							<span t-esc="manifest['time']" />
+						</td>
+						<td class="text-left">
+							<span t-esc="manifest['city']" />
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</xpath>
+	</template>
+</odoo>

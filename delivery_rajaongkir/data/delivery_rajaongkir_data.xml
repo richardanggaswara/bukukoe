@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data noupdate="1">
+
+		<record id="delivery_carrier_rajaongkirapi_key1" model="delivery.carrier.rajaongkirapi">
+			<field name="name">Key 1</field>
+			<field name="api_key">29e9c623fff2501d993b8be00af03d8d</field>
+		</record>
+		<record id="delivery_carrier_rajaongkirurl_pro" model="delivery.carrier.rajaongkirurl">
+			<field name="name">Pro</field>
+			<field name="url">https://pro.rajaongkir.com/api/</field>
+		</record>
+		<record id="delivery_carrier_rajaongkirurl_basic" model="delivery.carrier.rajaongkirurl">
+			<field name="name">Basic</field>
+			<field name="url">https://api.rajaongkir.com/basic/</field>
+		</record>
+		<record id="delivery_carrier_rajaongkirurl_starter" model="delivery.carrier.rajaongkirurl">
+			<field name="name">Starter</field>
+			<field name="url">https://api.rajaongkir.com/starter/</field>
+		</record>
+
+		<record id="product_product_delivery_jne_oke" model="product.product">
+            <field name="name">JNE (OKE)</field>
+            <field name="default_code">JNE_OKE</field>
+            <field name="type">service</field>
+            <field name="categ_id" ref="delivery.product_category_deliveries"/>
+            <field name="sale_ok" eval="False"/>
+            <field name="purchase_ok" eval="False"/>
+            <field name="list_price">0.0</field>
+        </record>
+
+		<record id="delivery_carrier_rajaongkir_jne_oke" model="delivery.carrier">
+			<field name="name">JNE (OKE)</field>
+			<field name="delivery_type">rajaongkir</field>
+			<field name="prod_environment" eval="True" />
+			<field name="integration_level">rate</field>
+			<field name="rajaongkir_apikey" ref="delivery_carrier_rajaongkirapi_key1" />
+			<field name="rajaongkir_url" ref="delivery_carrier_rajaongkirurl_pro" />
+			<field name="rajaongkir_courier">jne</field>
+			<field name="rajaongkir_service">OKE</field>
+			<field name="product_id" ref="delivery_rajaongkir.product_product_delivery_jne_oke"/>
+		</record>
+
+		<record id="product_product_delivery_jne_reg" model="product.product">
+            <field name="name">JNE (REG)</field>
+            <field name="default_code">JNE_REG</field>
+            <field name="type">service</field>
+            <field name="categ_id" ref="delivery.product_category_deliveries"/>
+            <field name="sale_ok" eval="False"/>
+            <field name="purchase_ok" eval="False"/>
+            <field name="list_price">0.0</field>
+        </record>
+
+		<record id="delivery_carrier_rajaongkir_jne_reg" model="delivery.carrier">
+			<field name="name">JNE (REG)</field>
+			<field name="delivery_type">rajaongkir</field>
+			<field name="prod_environment" eval="True" />
+			<field name="integration_level">rate</field>
+			<field name="rajaongkir_apikey" ref="delivery_carrier_rajaongkirapi_key1" />
+			<field name="rajaongkir_url" ref="delivery_carrier_rajaongkirurl_pro" />
+			<field name="rajaongkir_courier">jne</field>
+			<field name="rajaongkir_service">REG</field>
+			<field name="product_id" ref="delivery_rajaongkir.product_product_delivery_jne_reg"/>
+		</record>
+
+	</data>
+</odoo>

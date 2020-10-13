@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_delivery_carrier_rajaongkirurl,access_delivery_carrier_rajaongkirurl,model_delivery_carrier_rajaongkirurl,base.group_user,1,1,1,1
+access_delivery_carrier_rajaongkirapi,access_delivery_carrier_rajaongkirapi,model_delivery_carrier_rajaongkirapi,base.group_user,1,1,1,1
+access_res_country_city,access_res_country_city,model_res_country_city,base.group_user,1,1,1,1
+access_res_country_subdistrict,access_res_country_subdistrict,model_res_country_subdistrict,base.group_user,1,1,1,1
+access_res_country_city_user,access_res_country_city_user,model_res_country_city,base.group_portal,1,0,0,0
+access_res_country_subdistrict_user,access_res_country_subdistrict_user,model_res_country_subdistrict,base.group_portal,1,0,0,0
